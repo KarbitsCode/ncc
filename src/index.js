@@ -3,6 +3,7 @@ const fs = require("graceful-fs");
 const crypto = require("crypto");
 const { join, dirname, extname, resolve: pathResolve } = require("path");
 const webpack = require("webpack");
+const babel = require("@babel/core");
 const MemoryFS = require("memory-fs");
 const terser = require("terser");
 const tsconfigPaths = require("tsconfig-paths");
@@ -471,6 +472,12 @@ function ncc (
     delete assets[`${filename}${ext === '.cjs' ? '.js' : ''}.map`];
     let code = mfs.readFileSync(`/${filename}${ext === '.cjs' ? '.js' : ''}`, "utf8");
     let map = sourceMap ? JSON.parse(mfs.readFileSync(`/${filename}${ext === '.cjs' ? '.js' : ''}.map`, "utf8")) : null;
+
+    if (!process.argv.some(arg => arg.includes("--no-babel"))) {
+      code = babel.transformSync(code, {
+        presets: [["@babel/preset-env", { targets: "ie 11" }]],
+      }).code;
+    }
 
     if (minify) {
       let result;

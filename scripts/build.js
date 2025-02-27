@@ -8,7 +8,7 @@ const bytes = require("bytes");
 
 const minify = true;
 const v8cache = true;
-const cache = process.argv[2] === "--no-cache" ? false : join(__dirname, "..", ".cache");
+const cache = process.argv.some(arg => arg.includes("--no-cache")) ? false : join(__dirname, "..", ".cache");
 
 async function main() {
   for (const file of await glob(__dirname + "/../dist/**/*.@(js|cache|ts)")) {
