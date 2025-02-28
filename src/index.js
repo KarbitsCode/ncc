@@ -475,7 +475,12 @@ function ncc (
 
     if (!process.argv.some(arg => arg.includes("--no-babel"))) {
       code = babel.transformSync(code, {
-        presets: [["@babel/preset-env", { targets: "ie 11" }]],
+        presets: [[require("@babel/preset-env"), { targets: "ie 11" }]],
+        babelrc: false,
+        configFile: false,
+        comments: !minify,
+        compact: minify,
+        retainLines: !minify
       }).code;
     }
 
@@ -484,10 +489,10 @@ function ncc (
       try {
         result = await terser.minify(code, {
           module: esm,
-          compress: false,
+          compress: minify,
           mangle: {
-            keep_classnames: true,
-            keep_fnames: true
+            keep_classnames: !minify,
+            keep_fnames: !minify
           },
           sourceMap: map ? {
             content: map,
