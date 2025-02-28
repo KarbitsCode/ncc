@@ -476,6 +476,7 @@ function ncc (
     if (!process.argv.some(arg => arg.includes("--no-babel"))) {
       code = babel.transformSync(code, {
         presets: [[require("@babel/preset-env"), { targets: "ie 11" }]],
+        plugins: [[require("./utils/transform-bigint")]],
         babelrc: false,
         configFile: false,
         comments: !minify,
