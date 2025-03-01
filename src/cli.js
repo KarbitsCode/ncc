@@ -135,7 +135,7 @@ function showVersion() {
   process.stdout.write(require("../package.json").version + '\n');
 }
 
-async function runCmd (argv, stdout, stderr) {
+async function runCmd (argv, stdout = process.stdout, stderr = process.stderr) {
   let args;
   try {
     args = require("arg")({
