@@ -91,7 +91,7 @@ function ncc (
     throw new Error(`Invalid "target" value provided ${target}, value must be es version e.g. es2015`)
   }
 
-  const resolvedEntry = resolve.sync(entry);
+  const resolvedEntry = resolve.sync(pathResolve(entry));
   process.env.__NCC_OPTS = JSON.stringify({
     quiet,
     typescriptLookupPath: resolvedEntry,
