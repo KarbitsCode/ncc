@@ -1,7 +1,7 @@
 const resolve = require("resolve");
 const fs = require("graceful-fs");
 const crypto = require("crypto");
-const { join, dirname, extname, resolve: pathResolve } = require("path");
+const { join, dirname, extname, basename, resolve: pathResolve } = require("path");
 const webpack = require("webpack");
 const babel = require("@babel/core");
 const MemoryFS = require("memory-fs");
@@ -84,7 +84,7 @@ function ncc (
 
   if (!quiet) {
     console.log(`ncc: Version ${nccVersion}`);
-    console.log(`ncc: Compiling file ${filename} into ${esm ? 'ESM' : 'CJS'}`);
+    console.log(`ncc: Compiling file ${filename.includes('index') ? new RegExp('\\.(c?m?js)$').test(basename(entry)) ? basename(entry) : basename(entry) + '.js' : filename} into ${esm ? 'ESM' : 'CJS'}`);
   }
 
   if (target && !target.startsWith('es')) {
