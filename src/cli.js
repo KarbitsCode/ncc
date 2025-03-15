@@ -9,6 +9,7 @@ const { writeFileSync, unlink, existsSync, symlinkSync } = require("fs");
 const { hasTypeModule } = require('./utils/has-type-module');
 const mkdirp = require("mkdirp");
 const { version: nccVersion } = require('../package.json');
+const cacheDir = require("./utils/ncc-cache-dir");
 
 // License and TypeScript plugins have Webpack deprecation warnings
 // we don't want these on when running as a CLI utility
@@ -132,7 +133,7 @@ function showHelp() {
 }
 
 function showVersion() {
-  process.stdout.write(require("../package.json").version + '\n');
+  process.stdout.write(nccVersion + '\n');
 }
 
 async function runCmd (argv, stdout = process.stdout, stderr = process.stderr) {
@@ -202,7 +203,6 @@ async function runCmd (argv, stdout = process.stdout, stderr = process.stderr) {
       if (flags.length)
         errFlagNotCompatible(flags[0], "cache");
 
-      const cacheDir = require("./utils/ncc-cache-dir");
       switch (args._[1]) {
         case "clean":
           rimraf.sync(cacheDir);
@@ -265,7 +265,7 @@ async function runCmd (argv, stdout = process.stdout, stderr = process.stderr) {
           sourceMap: args["--source-map"] || run,
           sourceMapRegister: args["--no-source-map-register"] ? false : undefined,
           assetBuilds: args["--asset-builds"] ? true : false,
-          cache: args["--no-cache"] ? false : undefined,
+          cache: args["--no-cache"] || run ? false : undefined,
           watch: args["--watch"],
           v8cache: args["--v8-cache"],
           transpileOnly: args["--transpile-only"],
@@ -349,7 +349,7 @@ async function runCmd (argv, stdout = process.stdout, stderr = process.stderr) {
           }
           return new Promise((resolve, reject) => {
             function exit (code) {
-              require("rimraf").sync(outDir);
+              rimraf.sync(outDir);
               if (code === 0)
                 resolve();
               else
