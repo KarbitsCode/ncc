@@ -267,7 +267,7 @@ async function runCmd (argv, stdout = process.stdout, stderr = process.stderr) {
           assetBuilds: args["--asset-builds"] ? true : false,
           cache: args["--no-cache"] || run ? false : undefined,
           watch: args["--watch"],
-          v8cache: args["--v8-cache"],
+          v8cache: args["--v8-cache"] || run,
           transpileOnly: args["--transpile-only"],
           license: args["--license"],
           quiet,
