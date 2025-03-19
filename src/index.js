@@ -495,6 +495,9 @@ function ncc (
             keep_classnames: !minify,
             keep_fnames: !minify
           },
+          format: {
+            beautify: !minify
+          },
           sourceMap: map ? {
             content: map,
             filename,
@@ -510,8 +513,7 @@ function ncc (
           code: result.code,
           map: map ? JSON.parse(result.map) : undefined
         });
-      }
-      catch (e) {
+      } catch (e) {
         console.log('An error occurred while minifying. The result will not be minified.');
         if (debugLog) {
           console.log(e);
