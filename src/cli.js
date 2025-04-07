@@ -66,16 +66,16 @@ else {
 
 function renderSummary(code, map, assets, ext, outDir, buildTime) {
   if (outDir && !outDir.endsWith(sep)) outDir += sep;
-  const codeSize = Math.round(Buffer.byteLength(code, "utf8") / 1024);
-  const mapSize = map ? Math.round(Buffer.byteLength(map, "utf8") / 1024) : 0;
+  const codeSize = Math.max(1, Math.round(Buffer.byteLength(code, "utf8") / 1024));
+  const mapSize = map ? Math.max(1, Math.round(Buffer.byteLength(map, "utf8") / 1024)) : 0;
   const assetSizes = Object.create(null);
   let totalSize = codeSize;
   let maxAssetNameLength = 8 + (map ? 4 : 0); // length of index.js(.map)?
   for (const asset of Object.keys(assets)) {
     const assetSource = assets[asset].source;
-    const assetSize = Math.round(
+    const assetSize = Math.max(1, Math.round(
       (assetSource.byteLength || Buffer.byteLength(assetSource, "utf8")) / 1024
-    );
+    ));
     assetSizes[asset] = assetSize;
     totalSize += assetSize;
     if (asset.length > maxAssetNameLength) maxAssetNameLength = asset.length;
