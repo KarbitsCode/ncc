@@ -28,6 +28,7 @@ Options:
   -o, --out [file]         Output directory for build (defaults to dist)
   -m, --minify             Minify output
   -C, --no-cache           Skip build cache population
+  -B, --no-babel           Skip babel transform
   -s, --source-map         Generate source map
   -a, --asset-builds       Build nested JS assets recursively, useful for
                            when code is loaded as an asset eg for workers.
@@ -158,6 +159,8 @@ async function runCmd (argv, stdout = process.stdout, stderr = process.stderr) {
       "-s": "--source-map",
       "--no-cache": Boolean,
       "-C": "--no-cache",
+      "--no-babel": Boolean,
+      "-B": "--no-babel",
       "--no-asset-builds": Boolean,
       "--no-source-map-register": Boolean,
       "--quiet": Boolean,
@@ -266,6 +269,7 @@ async function runCmd (argv, stdout = process.stdout, stderr = process.stderr) {
           sourceMapRegister: args["--no-source-map-register"] ? false : undefined,
           assetBuilds: args["--asset-builds"] ? true : false,
           cache: args["--no-cache"] || run ? false : undefined,
+          nobabel: args["--no-babel"] ? true : undefined,
           watch: args["--watch"],
           v8cache: args["--v8-cache"] || run,
           transpileOnly: args["--transpile-only"],

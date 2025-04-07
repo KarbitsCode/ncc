@@ -50,6 +50,7 @@ function ncc (
     v8cache = false,
     filterAssetBase = process.cwd(),
     existingAssetNames = [],
+    nobabel = false,
     quiet = false,
     debugLog = false,
     transpileOnly = false,
@@ -473,7 +474,7 @@ function ncc (
     let code = mfs.readFileSync(`/${filename}${ext === '.cjs' ? '.js' : ''}`, "utf8");
     let map = sourceMap ? JSON.parse(mfs.readFileSync(`/${filename}${ext === '.cjs' ? '.js' : ''}.map`, "utf8")) : null;
 
-    if (!process.argv.some(arg => arg.includes("--no-babel"))) {
+    if (!process.argv.some(arg => arg.includes("--no-babel")) && !nobabel) {
       code = babel.transformSync(code, {
         presets: [[require("@babel/preset-env"), { targets: "ie 11" }]],
         plugins: [[require("./utils/transform-bigint")], [require('./utils/transform-ternary')]],
