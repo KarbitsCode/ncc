@@ -85,7 +85,7 @@ function ncc (
 
   if (!quiet) {
     console.log(`ncc: Version ${nccVersion}`);
-    console.log(`ncc: Compiling file ${filename.includes('index') ? new RegExp('\\.(c?m?js)$').test(basename(entry)) ? basename(entry) : basename(entry) + '.js' : filename} into ${esm ? 'ESM' : 'CJS'}`);
+    console.log(`ncc: Compiling file ${filename.includes('index') ? new RegExp('\\.(c?m?[tj]sx?)$').test(basename(entry)) ? basename(entry) : basename(entry) + '.js' : filename} into ${esm ? 'ESM' : 'CJS'}`);
   }
 
   if (target && !target.startsWith('es')) {
