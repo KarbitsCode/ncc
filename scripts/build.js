@@ -108,6 +108,7 @@ async function main() {
   safeWriteFileSync(__dirname + "/../dist/ncc/cli.js.cache.js", cliAssets["cli.js.cache.js"]?.source);
   safeWriteFileSync(__dirname + "/../dist/ncc/index.js.cache.js", indexAssets["index.js.cache.js"]?.source);
   safeWriteFileSync(__dirname + "/../dist/ncc/sourcemap-register.js.cache.js", sourcemapAssets["sourcemap-register.js.cache.js"]?.source);
+  safeWriteFileSync(__dirname + "/../src/sourcemap-register.js.cache.js", sourcemapAssets["sourcemap-register.js.cache.js"]?.source);
   safeWriteFileSync(__dirname + "/../dist/ncc/loaders/relocate-loader.js.cache.js", relocateLoaderAssets["relocate-loader.js.cache.js"]?.source);
   safeWriteFileSync(__dirname + "/../dist/ncc/loaders/shebang-loader.js.cache.js", shebangLoaderAssets["shebang-loader.js.cache.js"]?.source);
   safeWriteFileSync(__dirname + "/../dist/ncc/loaders/ts-loader.js.cache.js", tsLoaderAssets["ts-loader.js.cache.js"]?.source);

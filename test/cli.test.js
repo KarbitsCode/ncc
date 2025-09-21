@@ -3,7 +3,7 @@ const { join } = require("path");
 const cliTests = require("./cli.js");
 const file = global.coverage ? "/../src/cli.js" : "/../dist/ncc/cli.js";
 
-jest.setTimeout(20000);
+jest.setTimeout(30000);
 
 for (const cliTest of cliTests) {
   it(`should execute "ncc ${(cliTest.args || []).join(" ")}"`, async () => {

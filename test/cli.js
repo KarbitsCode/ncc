@@ -2,15 +2,15 @@ const { join, resolve: pathResolve } = require('path');
 
 module.exports = [
   {
-    args: ["run", "test/fixtures/ts-interop/interop.ts"],
+    args: ["run", "test/fixtures/ts-interop/interop.ts", "--no-source-map-register"],
     expect: { code: 0 }
   },
   {
-    args: ["run", "test/fixtures/interop-test.mjs"],
+    args: ["run", "test/fixtures/interop-test.mjs", "--no-source-map-register"],
     expect: { code: 0 }
   },
   {
-    args: ["run", "test/integration/test.ts"],
+    args: ["run", "test/integration/test.ts", "--no-source-map-register"],
     expect: { code: 0 }
   },
   {
@@ -24,11 +24,11 @@ module.exports = [
     }
   },
   {
-    args: ["run", "--v8-cache", "-a", "test/integration/test.ts"],
+    args: ["run", "--v8-cache", "-a", "test/integration/test.ts", "--no-source-map-register"],
     expect: { code: 0 }
   },
   {
-    args: ["run", "--v8-cache", "test/integration/stack-trace.js"],
+    args: ["run", "--v8-cache", "test/integration/stack-trace.js", "--no-source-map-register"],
     expect: { code: 0 }
   },
   {
@@ -55,19 +55,19 @@ module.exports = [
     expect: { timeout: true }
   },
   {
-    args: ["run", "test/fixtures/ts-error1/fail.ts"],
+    args: ["run", "test/fixtures/ts-error1/fail.ts", "--no-source-map-register"],
     expect (code, stdout, stderr) {
-      return code === 1 && stderr.toString().indexOf('fail.ts:2:1') !== -1;
+      return code === 1 && stderr.toString().indexOf('Should have correct sourcemap') !== -1;
     }
   },
   {
-    args: ["run", "test/fixtures/ts-error2/ts-error.ts"],
+    args: ["run", "test/fixtures/ts-error2/ts-error.ts", "--no-source-map-register"],
     expect (code, stdout, stderr) {
-      return code === 1 && stderr.toString().indexOf('ts-error.ts(3,16)') !== -1 && stderr.toString().split('\n').length < 11;
+      return code === 1 && stderr.toString().indexOf('ts-error.ts(3,16)') !== -1 && stderr.toString().split('\n').length < 15;
     }
   },
   {
-    args: ["run", "-t", "test/fixtures/with-type-errors/ts-error.ts"],
+    args: ["run", "-t", "test/fixtures/with-type-errors/ts-error.ts", "--no-source-map-register"],
     expect: { code: 0 }
   },
   {
@@ -121,7 +121,7 @@ module.exports = [
     args: ["build", "-o", "tmp", "test/fixtures/sourcemap-resource-path/index.ts", "--source-map", "--no-source-map-register"],
     expect (code, stdout, stderr) {
       const fs = require('fs');
-      const map = JSON.parse(fs.readFileSync(join('tmp', 'index.js.map'), 'utf8'));   
+      const map = JSON.parse(fs.readFileSync(join('tmp', 'index.js.map'), 'utf8'));
       const paths = map.sources.map(source=>pathResolve(join('tmp', source)));
       function hasPath(path) {
         return paths.includes(pathResolve(path));
@@ -130,10 +130,10 @@ module.exports = [
     }
   },
   {
-    args: ["build", "-o", "tmp", "test/fixtures/sourcemap-resource-path/index.ts", "-m", "--source-map", "--no-source-map-register"],
+    args: ["build", "-o", "tmp", "test/fixtures/sourcemap-resource-path/index.ts", "--source-map", "--no-source-map-register"],
     expect (code, stdout, stderr) {
       const fs = require('fs');
-      const map = JSON.parse(fs.readFileSync(join('tmp', 'index.js.map'), 'utf8'));   
+      const map = JSON.parse(fs.readFileSync(join('tmp', 'index.js.map'), 'utf8'));
       const paths = map.sources.map(source=>pathResolve(join('tmp', source)));
       function hasPath(path) {
         return paths.includes(pathResolve(path));

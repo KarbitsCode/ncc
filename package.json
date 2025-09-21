@@ -14,8 +14,8 @@
   "scripts": {
     "build": "node scripts/build.js --no-babel",
     "build-test-binary": "cd test/binary && node-gyp rebuild && cpy build/Release/hello.node ../integration/ --flat",
-    "test": "node --expose-gc --max_old_space_size=4096 node_modules/jest/bin/jest.js",
-    "test-coverage": "node --expose-gc --max_old_space_size=4096 node_modules/jest/bin/jest.js --runInBand --coverage --globals \"{\\\"coverage\\\":true}\"",
+    "test": "cross-env NCC_NO_BABEL=1 node --expose-gc --max_old_space_size=4096 node_modules/jest/bin/jest.js",
+    "test-coverage": "npm run test -- --runInBand --coverage --globals \"{\\\"coverage\\\":true}\"",
     "prepublishOnly": "npm run build -- --no-cache",
     "prepare": "npm run build-test-binary && npm run build"
   },
@@ -47,6 +47,7 @@
     "core-js": "^2.5.7",
     "cowsay": "^1.3.1",
     "cpy-cli": "^5.0.0",
+    "cross-env": "^10.0.0",
     "esm": "^3.2.22",
     "express": "^4.18.2",
     "fetch-h2": "^3.0.2",

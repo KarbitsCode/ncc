@@ -50,7 +50,7 @@ function ncc (
     v8cache = false,
     filterAssetBase = process.cwd(),
     existingAssetNames = [],
-    nobabel = false,
+    nobabel = !!process.env.NCC_NO_BABEL,
     quiet = false,
     debugLog = false,
     transpileOnly = false,
