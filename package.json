@@ -14,10 +14,11 @@
   "scripts": {
     "build": "node scripts/build.js --no-babel",
     "build-test-binary": "cd test/binary && node-gyp rebuild && cpy build/Release/hello.node ../integration/ --flat",
+    "pretest": "npm run build-test-binary",
     "test": "cross-env NCC_NO_BABEL=1 node --expose-gc --max_old_space_size=4096 node_modules/jest/bin/jest.js",
     "test-coverage": "npm run test -- --runInBand --coverage --globals \"{\\\"coverage\\\":true}\"",
     "prepublishOnly": "npm run build -- --no-cache",
-    "prepare": "npm run build-test-binary && npm run build"
+    "prepare": "npm run build"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "^3.787.0",
