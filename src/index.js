@@ -482,8 +482,15 @@ function ncc (
 
     if (!nobabel) {
       code = babel.transformSync(code, {
-        presets: [[require("@babel/preset-env"), { targets: "ie 11" }]],
-        plugins: [[require("./utils/transform-bigint")], [require('babel-plugin-transform-ternary')]],
+        presets: [
+          [require("@babel/preset-env"), {
+            targets: "ie 11"
+          }]
+        ],
+        plugins: [
+          [require("./utils/transform-bigint")],
+          [require("babel-plugin-transform-ternary")]
+        ],
         babelrc: false,
         configFile: false,
         comments: !minify,
