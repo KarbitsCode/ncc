@@ -260,7 +260,7 @@ function ncc (
     }));
   }
 
-  const compiler = webpack({
+  const compilerConfig = {
     entry,
     cache: cache === false ? undefined : {
       type: "filesystem",
@@ -391,7 +391,8 @@ function ncc (
       },
     },
     plugins
-  });
+  };
+  const compiler = webpack(compilerConfig);
   compiler.outputFileSystem = mfs;
   if (!watch) {
     return new Promise((resolve, reject) => {
